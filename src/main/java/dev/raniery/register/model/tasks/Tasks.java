@@ -5,7 +5,6 @@ import dev.raniery.register.model.developer.Developer;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name = "tb_tasks")
