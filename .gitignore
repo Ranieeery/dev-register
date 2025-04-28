@@ -38,4 +38,7 @@ mvnw
 mvnw.cmd
 .gitattributes
 
+### Database ###
+data/
+
 .env
