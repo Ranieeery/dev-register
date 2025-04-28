@@ -30,7 +30,8 @@ public class Developer {
     public Developer() {
     }
 
-    public Developer(String name, EnumSet<Languages> languages, int yearsExperiente, Especialization especialization, Seniority seniority, String linkedin, String github) {
+    public Developer(UUID id, String name, EnumSet<Languages> languages, int yearsExperiente, Especialization especialization, Seniority seniority, String linkedin, String github, List<Tasks> tasks) {
+        this.id = id;
         this.name = name;
         this.languages = languages;
         this.yearsExperiente = yearsExperiente;
@@ -38,6 +39,7 @@ public class Developer {
         this.seniority = seniority;
         this.linkedin = linkedin;
         this.github = github;
+        this.tasks = tasks;
     }
 
     public UUID getId() {

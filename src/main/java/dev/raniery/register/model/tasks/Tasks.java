@@ -23,6 +23,18 @@ public class Tasks {
     @JoinColumn(name = "developer_id")
     private Developer developer;
 
+    public Tasks() {
+    }
+
+    public Tasks(Long id, String name, String description, Languages language, LocalDate dueDate, Developer developer) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.language = language;
+        this.dueDate = dueDate;
+        this.developer = developer;
+    }
+
     public void setDeveloper(Developer developer) {
         this.developer = developer;
     }
