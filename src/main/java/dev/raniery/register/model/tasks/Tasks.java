@@ -5,6 +5,7 @@ import dev.raniery.register.model.developer.Developer;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tb_tasks")
@@ -16,6 +17,9 @@ public class Tasks {
     private String name;
     private String description;
     private Languages language;
+
+    private LocalDateTime startDate;
+
     private LocalDate dueDate;
 
     @ManyToOne
@@ -25,7 +29,7 @@ public class Tasks {
     public Tasks() {
     }
 
-    public Tasks(Long id, String name, String description, Languages language, LocalDate dueDate, Developer developer) {
+    public Tasks(Long id, String name, String description, Languages language, LocalDateTime startDate, LocalDate dueDate, Developer developer) {
         this.id = id;
         this.name = name;
         this.description = description;
