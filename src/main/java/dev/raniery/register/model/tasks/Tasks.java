@@ -5,6 +5,7 @@ import dev.raniery.register.model.developer.Developer;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_tasks")
@@ -17,7 +18,36 @@ public class Tasks {
     private String description;
     private Languages language;
     private LocalDate dueDate;
+
+    @ManyToOne
+    @JoinColumn(name = "developer_id")
     private Developer developer;
 
-    
+    public void setDeveloper(Developer developer) {
+        this.developer = developer;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Languages getLanguage() {
+        return language;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public Developer getDeveloper() {
+        return developer;
+    }
 }

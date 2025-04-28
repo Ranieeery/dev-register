@@ -23,6 +23,8 @@ public class Developer {
     private Seniority seniority;
     private String linkedin;
     private String github;
+
+    @OneToMany
     private List<Tasks> tasks;
 
     public Developer() {
