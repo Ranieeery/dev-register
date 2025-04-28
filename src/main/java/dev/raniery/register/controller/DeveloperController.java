@@ -11,19 +11,19 @@ public class DeveloperController {
         return "Developer created";
     }
 
-    @GetMapping("/all")
+    @PutMapping
+    public String updateDeveloper() {
+        return "Developer updated";
+    }
+
+    @GetMapping("/list")
     public String listDeveloper() {
         return "List of developers";
     }
 
-    @GetMapping("/all/{id}")
+    @GetMapping("/list/{id}")
     public String listDeveloperById() {
         return "Developer by id";
-    }
-
-    @PutMapping
-    public String updateDeveloper() {
-        return "Developer updated";
     }
 
     @DeleteMapping("/{id}")
