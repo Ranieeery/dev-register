@@ -1,4 +1,4 @@
-package dev.raniery.register.model;
+package dev.raniery.register.model.developer;
 
 public enum Especialization {
     FRONTEND,
