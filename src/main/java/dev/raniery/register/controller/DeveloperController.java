@@ -1,10 +1,20 @@
 package dev.raniery.register.controller;
 
+import dev.raniery.register.model.developer.Developer;
+import dev.raniery.register.service.DeveloperService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/developer")
 public class DeveloperController {
+
+    private final DeveloperService developerService;
+
+    public DeveloperController(DeveloperService developerService) {
+        this.developerService = developerService;
+    }
 
     @PostMapping
     public String createDeveloper() {
@@ -17,8 +27,8 @@ public class DeveloperController {
     }
 
     @GetMapping("/list")
-    public String listDeveloper() {
-        return "List of developers";
+    public List<Developer> listDeveloper() {
+        return developerService.findAll();
     }
 
     @GetMapping("/list/{id}")

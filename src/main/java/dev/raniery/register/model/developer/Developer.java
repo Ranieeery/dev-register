@@ -24,7 +24,7 @@ public class Developer {
     private String linkedin;
     private String github;
 
-    @OneToMany
+    @OneToMany(mappedBy = "developer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Tasks> tasks;
 
     public Developer() {
@@ -72,5 +72,9 @@ public class Developer {
 
     public String getGithub() {
         return github;
+    }
+
+    public List<Tasks> getTasks() {
+        return tasks;
     }
 }

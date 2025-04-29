@@ -1,5 +1,6 @@
 package dev.raniery.register.model.tasks;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.raniery.register.model.developer.Languages;
 import dev.raniery.register.model.developer.Developer;
 import jakarta.persistence.*;
@@ -24,6 +25,7 @@ public class Tasks {
 
     @ManyToOne
     @JoinColumn(name = "developer_id")
+    @JsonIgnore
     private Developer developer;
 
     public Tasks() {
@@ -34,6 +36,7 @@ public class Tasks {
         this.name = name;
         this.description = description;
         this.language = language;
+        this.startDate = startDate;
         this.dueDate = dueDate;
         this.developer = developer;
     }
@@ -64,5 +67,9 @@ public class Tasks {
 
     public Developer getDeveloper() {
         return developer;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
     }
 }
