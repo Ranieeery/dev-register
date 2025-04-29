@@ -32,8 +32,8 @@ public class DeveloperController {
     }
 
     @GetMapping("/list/{id}")
-    public String listDeveloperById() {
-        return "Developer by id";
+    public Developer listDeveloperById(@PathVariable String id) {
+        return developerService.findById(id);
     }
 
     @DeleteMapping("/{id}")

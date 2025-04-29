@@ -5,6 +5,8 @@ import dev.raniery.register.repository.DeveloperRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
+import java.util.Optional;
 
 @Service
 public class DeveloperService {
@@ -15,7 +17,18 @@ public class DeveloperService {
         this.developerRepository = developerRepository;
     }
 
+    public void save(Developer developer) {
+        developerRepository.save(developer);
+    }
+
     public List<Developer> findAll() {
         return developerRepository.findAll();
+    }
+
+    public Developer findById(String id) {
+        UUID uuid = UUID.fromString(id);
+
+        Optional<Developer> developer = developerRepository.findById(uuid);
+        return developer.orElse(null);
     }
 }

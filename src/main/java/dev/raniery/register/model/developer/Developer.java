@@ -17,9 +17,15 @@ public class Developer {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String name;
+
+    @Enumerated(EnumType.STRING)
     private EnumSet<Languages> languages;
+
     private int yearsExperiente;
+
+    @Enumerated(EnumType.STRING)
     private Especialization especialization;
+
     private Seniority seniority;
     private String linkedin;
     private String github;
