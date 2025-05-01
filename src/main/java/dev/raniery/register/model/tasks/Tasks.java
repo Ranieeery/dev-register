@@ -72,4 +72,28 @@ public class Tasks {
     public LocalDateTime getStartDate() {
         return startDate;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setLanguage(Languages language) {
+        this.language = language;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
 }

@@ -18,30 +18,28 @@ public class Developer {
     private UUID id;
     private String name;
 
-    @Enumerated(EnumType.STRING)
     private EnumSet<Languages> languages;
 
     private int yearsExperiente;
 
-    @Enumerated(EnumType.STRING)
-    private Especialization especialization;
+    private Specialization specialization;
 
     private Seniority seniority;
     private String linkedin;
     private String github;
 
-    @OneToMany(mappedBy = "developer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "developer")
     private List<Tasks> tasks;
 
     public Developer() {
     }
 
-    public Developer(UUID id, String name, EnumSet<Languages> languages, int yearsExperiente, Especialization especialization, Seniority seniority, String linkedin, String github, List<Tasks> tasks) {
+    public Developer(UUID id, String name, EnumSet<Languages> languages, int yearsExperiente, Specialization specialization, Seniority seniority, String linkedin, String github, List<Tasks> tasks) {
         this.id = id;
         this.name = name;
         this.languages = languages;
         this.yearsExperiente = yearsExperiente;
-        this.especialization = especialization;
+        this.specialization = specialization;
         this.seniority = seniority;
         this.linkedin = linkedin;
         this.github = github;
@@ -64,8 +62,8 @@ public class Developer {
         return yearsExperiente;
     }
 
-    public Especialization getEspecialization() {
-        return especialization;
+    public Specialization getSpecialization() {
+        return specialization;
     }
 
     public Seniority getSeniority() {
@@ -82,5 +80,37 @@ public class Developer {
 
     public List<Tasks> getTasks() {
         return tasks;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLanguages(EnumSet<Languages> languages) {
+        this.languages = languages;
+    }
+
+    public void setYearsExperiente(int yearsExperiente) {
+        this.yearsExperiente = yearsExperiente;
+    }
+
+    public void setSpecialization(Specialization specialization) {
+        this.specialization = specialization;
+    }
+
+    public void setSeniority(Seniority seniority) {
+        this.seniority = seniority;
+    }
+
+    public void setLinkedin(String linkedin) {
+        this.linkedin = linkedin;
+    }
+
+    public void setGithub(String github) {
+        this.github = github;
+    }
+
+    public void setTasks(List<Tasks> tasks) {
+        this.tasks = tasks;
     }
 }

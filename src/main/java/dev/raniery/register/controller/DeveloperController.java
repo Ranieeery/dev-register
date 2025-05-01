@@ -16,9 +16,9 @@ public class DeveloperController {
         this.developerService = developerService;
     }
 
-    @PostMapping
-    public String createDeveloper() {
-        return "Developer created";
+    @PostMapping("/create")
+    public Developer createDeveloper(@RequestBody Developer developer) {
+        return developerService.createDeveloper(developer);
     }
 
     @PutMapping

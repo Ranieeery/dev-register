@@ -1,6 +1,6 @@
 package dev.raniery.register.model.developer;
 
-public enum Especialization {
+public enum Specialization {
     FRONTEND,
     BACKEND,
     FULLSTACK,

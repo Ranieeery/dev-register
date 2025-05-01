@@ -17,8 +17,8 @@ public class DeveloperService {
         this.developerRepository = developerRepository;
     }
 
-    public void save(Developer developer) {
-        developerRepository.save(developer);
+    public Developer createDeveloper(Developer developer) {
+        return developerRepository.save(developer);
     }
 
     public List<Developer> findAll() {
