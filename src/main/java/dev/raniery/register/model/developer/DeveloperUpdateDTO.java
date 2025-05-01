@@ -1,13 +1,14 @@
 package dev.raniery.register.model.developer;
 
 import java.util.EnumSet;
+import java.util.Optional;
 
 public record DeveloperUpdateDTO(
-    String name,
-    EnumSet<Languages> languages,
-    Integer yearsExperience,
-    Specialization specialization,
-    Seniority seniority,
-    String linkedin,
-    String github) {
+    Optional<String> name,
+    Optional<EnumSet<Languages>> languages,
+    Optional<Integer> yearsExperience,
+    Optional<Specialization> specialization,
+    Optional<Seniority> seniority,
+    Optional<String> linkedin,
+    Optional<String> github) {
 }

@@ -9,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 import java.util.Optional;
 
@@ -48,13 +47,13 @@ public class DeveloperService {
             Developer updatedDeveloper = developerRepository.save(developer);
 
             return new DeveloperUpdateDTO(
-                updatedDeveloper.getName(),
-                updatedDeveloper.getLanguages(),
-                updatedDeveloper.getYearsExperience(),
-                updatedDeveloper.getSpecialization(),
-                updatedDeveloper.getSeniority(),
-                updatedDeveloper.getLinkedin(),
-                updatedDeveloper.getGithub()
+                Optional.ofNullable(updatedDeveloper.getName()),
+                Optional.ofNullable(updatedDeveloper.getLanguages()),
+                Optional.of(updatedDeveloper.getYearsExperience()),
+                Optional.ofNullable(updatedDeveloper.getSpecialization()),
+                Optional.ofNullable(updatedDeveloper.getSeniority()),
+                Optional.ofNullable(updatedDeveloper.getLinkedin()),
+                Optional.ofNullable(updatedDeveloper.getGithub())
             );
         }
 

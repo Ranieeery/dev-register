@@ -40,7 +40,6 @@ public class Developer {
     @OneToMany(mappedBy = "developer")
     private List<Tasks> tasks;
 
-    //TODO: Construtor personalizado
     public Developer(DeveloperRegisterDTO registerDTO) {
         this.name = registerDTO.name();
         this.languages = registerDTO.languages();
@@ -52,32 +51,31 @@ public class Developer {
         this.active = true;
     }
 
-    //TODO: Inverter lógica para alterar valor
     public void setActive() {
         this.active = !active;
     }
 
     public void updateDeveloper(@Valid DeveloperUpdateDTO dto) {
-        if (dto.name() != null) {
-            this.name = dto.name();
+        if (dto.name().isPresent()) {
+            this.name = dto.name().get();
         }
-        if (dto.languages() != null) {
-            this.languages = dto.languages();
+        if (dto.languages().isPresent()) {
+            this.languages = dto.languages().get();
         }
-        if (dto.yearsExperience() != null) {
-            this.yearsExperience = dto.yearsExperience();
+        if (dto.yearsExperience().isPresent()) {
+            this.yearsExperience = dto.yearsExperience().get();
         }
-        if (dto.specialization() != null) {
-            this.specialization = dto.specialization();
+        if (dto.specialization().isPresent()) {
+            this.specialization = dto.specialization().get();
         }
-        if (dto.seniority() != null) {
-            this.seniority = dto.seniority();
+        if (dto.seniority().isPresent()) {
+            this.seniority = dto.seniority().get();
         }
-        if (dto.linkedin() != null) {
-            this.linkedin = dto.linkedin();
+        if (dto.linkedin().isPresent()) {
+            this.linkedin = dto.linkedin().get();
         }
-        if (dto.github() != null) {
-            this.github = dto.github();
+        if (dto.github().isPresent()) {
+            this.github = dto.github().get();
         }
     }
 }
