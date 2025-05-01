@@ -1,6 +1,7 @@
 package dev.raniery.register.model.developer;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.EnumSet;
 
@@ -9,16 +10,16 @@ public record DeveloperRegisterDTO(
     @NotBlank
     String name,
 
-    @NotBlank
+    @NotNull
     EnumSet<Languages> languages,
 
-    @NotBlank
+    @NotNull
     int yearsExperience,
 
-    @NotBlank
+    @NotNull
     Specialization specialization,
 
-    @NotBlank
+    @NotNull
     Seniority seniority,
     
     String linkedin,
