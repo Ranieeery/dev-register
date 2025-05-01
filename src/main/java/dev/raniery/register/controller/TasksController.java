@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/tasks")
 public class TasksController {
 
-    //TODO: Fazer TODA a lógica para a as tasks com a devida estrutura de Developer
+    //TODO: Fazer TODA a lógica para a as tasks com class DTO e Mapper
     @PostMapping
     public String createTask() {
         return "Task added";
