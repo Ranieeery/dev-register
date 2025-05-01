@@ -31,4 +31,13 @@ public class DeveloperService {
         Optional<Developer> developer = developerRepository.findById(uuid);
         return developer.orElse(null);
     }
+
+    public void deleteDeveloper(String id) {
+        UUID uuid = UUID.fromString(id);
+
+        Developer developer = developerRepository.getReferenceById(uuid);
+
+        developer.setActive();
+        developerRepository.save(developer);
+    }
 }

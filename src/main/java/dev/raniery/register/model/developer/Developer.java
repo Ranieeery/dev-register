@@ -28,6 +28,8 @@ public class Developer {
     private String linkedin;
     private String github;
 
+    private boolean active;
+
     @OneToMany(mappedBy = "developer")
     private List<Tasks> tasks;
 
@@ -44,6 +46,7 @@ public class Developer {
         this.linkedin = linkedin;
         this.github = github;
         this.tasks = tasks;
+        this.active = true;
     }
 
     public UUID getId() {
@@ -112,5 +115,13 @@ public class Developer {
 
     public void setTasks(List<Tasks> tasks) {
         this.tasks = tasks;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive() {
+        this.active = false;
     }
 }
