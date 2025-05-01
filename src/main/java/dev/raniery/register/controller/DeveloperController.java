@@ -1,13 +1,19 @@
 package dev.raniery.register.controller;
 
 import dev.raniery.register.model.developer.Developer;
+import dev.raniery.register.model.developer.DeveloperListDTO;
 import dev.raniery.register.model.developer.DeveloperRegisterDTO;
 import dev.raniery.register.service.DeveloperService;
 import jakarta.validation.Valid;
+import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -23,28 +29,32 @@ public class DeveloperController {
     //TODO: Classes records para tratar requisições
     //TODO: Records para NotNull
     //TODO: ResponseEntity com retornos personalizados
-    //TODO: Adicionar Transactional
     @PostMapping("/create")
+    @Transactional
     public Developer createDeveloper(@RequestBody @Valid DeveloperRegisterDTO developer) {
         return developerService.createDeveloper(developer);
     }
 
+    @GetMapping("/list")
+    public PagedModel<EntityModel<DeveloperListDTO>> listDeveloper(@PageableDefault(sort = {"name"}) Pageable pageable, PagedResourcesAssembler<DeveloperListDTO> assembler) {
+        var developerListDTOS = developerService.findAll(pageable);
+
+        return assembler.toModel(developerListDTOS);
+    }
+
+    @GetMapping("/list/{id}")
+    public DeveloperListDTO listDeveloperById(@PathVariable UUID id) {
+        return developerService.findById(id);
+    }
+
     @PutMapping("/update/{id}")
+    @Transactional
     public Developer updateDeveloper(@PathVariable UUID id, @RequestBody Developer developer) {
         return developerService.updateDeveloper(id, developer);
     }
 
-    @GetMapping("/list")
-    public List<Developer> listDeveloper() {
-        return developerService.findAll();
-    }
-
-    @GetMapping("/list/{id}")
-    public Developer listDeveloperById(@PathVariable UUID id) {
-        return developerService.findById(id);
-    }
-
     @DeleteMapping("/delete/{id}")
+    @Transactional
     public ResponseEntity<Object> deleteDeveloper(@PathVariable UUID id) {
         developerService.deleteDeveloper(id);
 

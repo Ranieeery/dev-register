@@ -23,6 +23,5 @@ public record DeveloperRegisterDTO(
     Seniority seniority,
     
     String linkedin,
-
     String github) {
 }

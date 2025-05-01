@@ -1,8 +1,11 @@
 package dev.raniery.register.service;
 
 import dev.raniery.register.model.developer.Developer;
+import dev.raniery.register.model.developer.DeveloperListDTO;
 import dev.raniery.register.model.developer.DeveloperRegisterDTO;
 import dev.raniery.register.repository.DeveloperRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,8 +27,14 @@ public class DeveloperService {
         return developerRepository.save(developerEntity);
     }
 
-    public List<Developer> findAll() {
-        return developerRepository.findAll();
+    public Page<DeveloperListDTO> findAll(Pageable pageable) {
+        return developerRepository.findAllByActiveTrue(pageable).map(DeveloperListDTO::new);
+    }
+
+    public DeveloperListDTO findById(UUID id) {
+        Optional<DeveloperListDTO> developer = developerRepository.findByIdAndActiveTrue(id).map(DeveloperListDTO::new);
+
+        return developer.orElse(null);
     }
 
     public Developer updateDeveloper(UUID id, Developer developer) {
@@ -36,11 +45,6 @@ public class DeveloperService {
         }
 
         return null;
-    }
-
-    public Developer findById(UUID id) {
-        Optional<Developer> developer = developerRepository.findById(id);
-        return developer.orElse(null);
     }
 
     public void deleteDeveloper(UUID id) {
