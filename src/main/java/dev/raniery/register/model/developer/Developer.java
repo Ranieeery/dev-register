@@ -6,10 +6,14 @@ import java.util.List;
 import java.util.UUID;
 
 import dev.raniery.register.model.tasks.Tasks;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.EnumSet;
 
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "tb_developer")
 public class Developer {
 
@@ -18,10 +22,12 @@ public class Developer {
     private UUID id;
     private String name;
 
+    //TODO: Adicionar Enums no banco para impedir dependência
     private EnumSet<Languages> languages;
 
-    private int yearsExperiente;
+    private int yearsExperience;
 
+    //TODO: Adicionar Enums no banco para impedir dependência
     private Specialization specialization;
 
     private Seniority seniority;
@@ -33,101 +39,20 @@ public class Developer {
     @OneToMany(mappedBy = "developer")
     private List<Tasks> tasks;
 
-    public Developer() {
-    }
-
     //TODO: Construtor personalizado
-    public Developer(UUID id, String name, EnumSet<Languages> languages, int yearsExperiente, Specialization specialization, Seniority seniority, String linkedin, String github, List<Tasks> tasks) {
-        this.id = id;
-        this.name = name;
-        this.languages = languages;
-        this.yearsExperiente = yearsExperiente;
-        this.specialization = specialization;
-        this.seniority = seniority;
-        this.linkedin = linkedin;
-        this.github = github;
-        this.tasks = tasks;
+    public Developer(DeveloperRegisterDTO registerDTO) {
+        this.name = registerDTO.name();
+        this.languages = registerDTO.languages();
+        this.yearsExperience = registerDTO.yearsExperience();
+        this.specialization = registerDTO.specialization();
+        this.seniority = registerDTO.seniority();
+        this.linkedin = registerDTO.linkedin();
+        this.github = registerDTO.github();
         this.active = true;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public EnumSet<Languages> getLanguages() {
-        return languages;
-    }
-
-    public int getYearsExperiente() {
-        return yearsExperiente;
-    }
-
-    public Specialization getSpecialization() {
-        return specialization;
-    }
-
-    public Seniority getSeniority() {
-        return seniority;
-    }
-
-    public String getLinkedin() {
-        return linkedin;
-    }
-
-    public String getGithub() {
-        return github;
-    }
-
-    public List<Tasks> getTasks() {
-        return tasks;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setLanguages(EnumSet<Languages> languages) {
-        this.languages = languages;
-    }
-
-    public void setYearsExperiente(int yearsExperiente) {
-        this.yearsExperiente = yearsExperiente;
-    }
-
-    public void setSpecialization(Specialization specialization) {
-        this.specialization = specialization;
-    }
-
-    public void setSeniority(Seniority seniority) {
-        this.seniority = seniority;
-    }
-
-    public void setLinkedin(String linkedin) {
-        this.linkedin = linkedin;
-    }
-
-    public void setGithub(String github) {
-        this.github = github;
-    }
-
-    public void setTasks(List<Tasks> tasks) {
-        this.tasks = tasks;
-    }
-
-    public boolean isActive() {
-        return active;
     }
 
     //TODO: Inverter lógica para alterar valor
     public void setActive() {
-        this.active = false;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
+        this.active = !active;
     }
 }
