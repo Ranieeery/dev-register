@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import dev.raniery.register.model.tasks.Tasks;
+import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -54,5 +55,29 @@ public class Developer {
     //TODO: Inverter lógica para alterar valor
     public void setActive() {
         this.active = !active;
+    }
+
+    public void updateDeveloper(@Valid DeveloperUpdateDTO dto) {
+        if (dto.name() != null) {
+            this.name = dto.name();
+        }
+        if (dto.languages() != null) {
+            this.languages = dto.languages();
+        }
+        if (dto.yearsExperience() != null) {
+            this.yearsExperience = dto.yearsExperience();
+        }
+        if (dto.specialization() != null) {
+            this.specialization = dto.specialization();
+        }
+        if (dto.seniority() != null) {
+            this.seniority = dto.seniority();
+        }
+        if (dto.linkedin() != null) {
+            this.linkedin = dto.linkedin();
+        }
+        if (dto.github() != null) {
+            this.github = dto.github();
+        }
     }
 }

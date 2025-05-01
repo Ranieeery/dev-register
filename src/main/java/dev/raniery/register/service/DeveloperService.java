@@ -3,6 +3,7 @@ package dev.raniery.register.service;
 import dev.raniery.register.model.developer.Developer;
 import dev.raniery.register.model.developer.DeveloperListDTO;
 import dev.raniery.register.model.developer.DeveloperRegisterDTO;
+import dev.raniery.register.model.developer.DeveloperUpdateDTO;
 import dev.raniery.register.repository.DeveloperRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,11 +38,24 @@ public class DeveloperService {
         return developer.orElse(null);
     }
 
-    public Developer updateDeveloper(UUID id, Developer developer) {
+    public DeveloperUpdateDTO updateDeveloper(UUID id, DeveloperUpdateDTO developerUpdateDTO) {
+        Optional<Developer> optionalDeveloper = developerRepository.findByIdAndActiveTrue(id);
 
-        if (developerRepository.existsById(id)) {
-            developer.setId(id);
-            return developerRepository.save(developer);
+        if (optionalDeveloper.isPresent()) {
+            Developer developer = optionalDeveloper.get();
+            developer.updateDeveloper(developerUpdateDTO);
+
+            Developer updatedDeveloper = developerRepository.save(developer);
+
+            return new DeveloperUpdateDTO(
+                updatedDeveloper.getName(),
+                updatedDeveloper.getLanguages(),
+                updatedDeveloper.getYearsExperience(),
+                updatedDeveloper.getSpecialization(),
+                updatedDeveloper.getSeniority(),
+                updatedDeveloper.getLinkedin(),
+                updatedDeveloper.getGithub()
+            );
         }
 
         return null;
