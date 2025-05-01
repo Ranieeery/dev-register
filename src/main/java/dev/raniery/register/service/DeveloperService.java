@@ -1,6 +1,7 @@
 package dev.raniery.register.service;
 
 import dev.raniery.register.model.developer.Developer;
+import dev.raniery.register.model.developer.DeveloperRegisterDTO;
 import dev.raniery.register.repository.DeveloperRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +18,10 @@ public class DeveloperService {
         this.developerRepository = developerRepository;
     }
 
-    public Developer createDeveloper(Developer developer) {
-        return developerRepository.save(developer);
+    public Developer createDeveloper(DeveloperRegisterDTO developer) {
+        Developer developerEntity = new Developer(developer);
+
+        return developerRepository.save(developerEntity);
     }
 
     public List<Developer> findAll() {

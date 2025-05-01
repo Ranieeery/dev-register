@@ -1,6 +1,7 @@
 package dev.raniery.register.controller;
 
 import dev.raniery.register.model.developer.Developer;
+import dev.raniery.register.model.developer.DeveloperRegisterDTO;
 import dev.raniery.register.service.DeveloperService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,9 @@ public class DeveloperController {
     //TODO: Classes records para tratar requisições
     //TODO: Records para NotNull
     //TODO: ResponseEntity com retornos personalizados
+    //TODO: Adicionar Transactional
     @PostMapping("/create")
-    public Developer createDeveloper(@RequestBody Developer developer) {
+    public Developer createDeveloper(@RequestBody DeveloperRegisterDTO developer) {
         return developerService.createDeveloper(developer);
     }
 

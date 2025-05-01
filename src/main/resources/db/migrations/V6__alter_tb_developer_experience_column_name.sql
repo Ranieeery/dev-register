@@ -1,0 +1,1 @@
+ALTER TABLE tb_developer RENAME COLUMN years_experiente TO years_experience
