@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/developer")
@@ -17,14 +18,17 @@ public class DeveloperController {
         this.developerService = developerService;
     }
 
+    //TODO: Classes records para tratar requisições
+    //TODO: Records para NotNull
+    //TODO: ResponseEntity com retornos personalizados
     @PostMapping("/create")
     public Developer createDeveloper(@RequestBody Developer developer) {
         return developerService.createDeveloper(developer);
     }
 
-    @PutMapping
-    public String updateDeveloper() {
-        return "Developer updated";
+    @PutMapping("/update/{id}")
+    public Developer updateDeveloper(@PathVariable UUID id, @RequestBody Developer developer) {
+        return developerService.updateDeveloper(id, developer);
     }
 
     @GetMapping("/list")
@@ -33,12 +37,12 @@ public class DeveloperController {
     }
 
     @GetMapping("/list/{id}")
-    public Developer listDeveloperById(@PathVariable String id) {
+    public Developer listDeveloperById(@PathVariable UUID id) {
         return developerService.findById(id);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deleteDeveloper(@PathVariable String id) {
+    public ResponseEntity<Object> deleteDeveloper(@PathVariable UUID id) {
         developerService.deleteDeveloper(id);
 
         return ResponseEntity.noContent().build();

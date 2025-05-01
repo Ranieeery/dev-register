@@ -36,6 +36,7 @@ public class Developer {
     public Developer() {
     }
 
+    //TODO: Construtor personalizado
     public Developer(UUID id, String name, EnumSet<Languages> languages, int yearsExperiente, Specialization specialization, Seniority seniority, String linkedin, String github, List<Tasks> tasks) {
         this.id = id;
         this.name = name;
@@ -121,7 +122,12 @@ public class Developer {
         return active;
     }
 
+    //TODO: Inverter lógica para alterar valor
     public void setActive() {
         this.active = false;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 }

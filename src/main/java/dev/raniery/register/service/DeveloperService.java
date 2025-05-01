@@ -25,17 +25,23 @@ public class DeveloperService {
         return developerRepository.findAll();
     }
 
-    public Developer findById(String id) {
-        UUID uuid = UUID.fromString(id);
+    public Developer updateDeveloper(UUID id, Developer developer) {
 
-        Optional<Developer> developer = developerRepository.findById(uuid);
+        if (developerRepository.existsById(id)) {
+            developer.setId(id);
+            return developerRepository.save(developer);
+        }
+
+        return null;
+    }
+
+    public Developer findById(UUID id) {
+        Optional<Developer> developer = developerRepository.findById(id);
         return developer.orElse(null);
     }
 
-    public void deleteDeveloper(String id) {
-        UUID uuid = UUID.fromString(id);
-
-        Developer developer = developerRepository.getReferenceById(uuid);
+    public void deleteDeveloper(UUID id) {
+        Developer developer = developerRepository.getReferenceById(id);
 
         developer.setActive();
         developerRepository.save(developer);
