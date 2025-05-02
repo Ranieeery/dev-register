@@ -13,7 +13,7 @@ Developer and task management system built with Spring Boot. This API allows reg
 - [Technologies](#-technologies)
 - [Installation and Setup](#-installation-and-setup)
 - [API Usage](#-api-usage)
-- [Database Structure](#-database-structure)
+- [Database Structure](#%EF%B8%8F-database-structure)
 - [API Documentation](#-api-documentation)
 - [License](#-license)
 
