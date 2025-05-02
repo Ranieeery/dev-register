@@ -1,6 +1,5 @@
 package dev.raniery.register.service;
 
-import dev.raniery.register.model.developer.DeveloperListDTO;
 import dev.raniery.register.model.tasks.*;
 import dev.raniery.register.repository.DeveloperRepository;
 import dev.raniery.register.repository.TasksRepository;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class TasksServive {
+public class TasksService {
 
     private final TasksRepository tasksRepository;
     private final TasksMapper tasksMapper;
@@ -19,7 +18,7 @@ public class TasksServive {
     private final DeveloperRepository developerRepository;
 
 
-    public TasksServive(TasksRepository tasksRepository, TasksMapper tasksMapper, TasksRegisterMapper tasksRegisterMapper, DeveloperRepository developerRepository) {
+    public TasksService(TasksRepository tasksRepository, TasksMapper tasksMapper, TasksRegisterMapper tasksRegisterMapper, DeveloperRepository developerRepository) {
         this.tasksRepository = tasksRepository;
         this.tasksMapper = tasksMapper;
         this.tasksRegisterMapper = tasksRegisterMapper;
