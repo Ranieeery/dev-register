@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 @Table(name = "tb_tasks")
 public class Tasks {
 
+    //TODO: Add priority
+    //TODO: Rename creationDate to createdAt
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,6 +40,8 @@ public class Tasks {
     private LocalDate creationDate;
 
     private LocalDate finishDate;
+
+    private boolean completed;
 
     public Tasks(TasksRegisterDTO registerDTO) {
         this.name = registerDTO.getName();
