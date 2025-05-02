@@ -102,7 +102,7 @@ public class TasksController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task " + id.toString() + " Not found or deleted. :(");
         }
 
-        tasksService.deleteTask(id);
+        tasksService.toggleActiveTask(id);
 
         return ResponseEntity.ok("Task " + id.toString() + " deleted with success!");
     }
@@ -120,7 +120,7 @@ public class TasksController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task " + id.toString() + " not found or not deleted.");
         }
 
-        tasksService.deleteTask(id);
+        tasksService.toggleActiveTask(id);
 
         return ResponseEntity.ok("Task " + id.toString() + " restored with success!");
     }

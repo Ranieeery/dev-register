@@ -64,7 +64,7 @@ public class TasksService {
         return null;
     }
 
-    public void deleteTask(Long id) {
+    public void toggleActiveTask(Long id) {
         Tasks task = tasksRepository.getReferenceById(id);
 
         task.setActive();

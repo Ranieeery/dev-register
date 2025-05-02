@@ -66,7 +66,7 @@ public class DeveloperService {
         return null;
     }
 
-    public void deleteDeveloper(UUID id) {
+    public void toggleActiveDeveloper(UUID id) {
         Developer developer = developerRepository.getReferenceById(id);
 
         developer.setActive();

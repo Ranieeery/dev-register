@@ -104,7 +104,7 @@ public class DeveloperController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id + " Not found or deleted. :(");
         }
 
-        developerService.deleteDeveloper(id);
+        developerService.toggleActiveDeveloper(id);
 
         return ResponseEntity.ok("Developer " + id + " deleted with success!");
     }
@@ -122,8 +122,8 @@ public class DeveloperController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id + " not found or not deleted.");
         }
 
-        developerService.deleteDeveloper(id);
+        developerService.toggleActiveDeveloper(id);
 
-        return ResponseEntity.ok("Developer " + id + " restored with success!");
+        return ResponseEntity.ok("Developer " + id + " restored successfully!");
     }
 }
