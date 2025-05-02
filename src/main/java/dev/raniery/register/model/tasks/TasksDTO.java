@@ -23,6 +23,6 @@ public class TasksDTO {
     @JsonIgnore
     private Developer developer;
     private Status status;
-    private LocalDate creationDate;
+    private LocalDate createdAt;
     private LocalDate finishDate;
 }

@@ -16,8 +16,6 @@ import java.time.LocalDateTime;
 @Table(name = "tb_tasks")
 public class Tasks {
 
-    //TODO: Add priority
-    //TODO: Rename creationDate to createdAt
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,7 +37,7 @@ public class Tasks {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private LocalDate creationDate;
+   private LocalDate createdAt;
 
     private LocalDate finishDate;
 
@@ -52,6 +50,6 @@ public class Tasks {
         this.dueDate = registerDTO.getDueDate();
         this.developer = registerDTO.getDeveloper();
         this.status = Status.TO_DO;
-        this.creationDate = LocalDate.now();
+        this.createdAt = LocalDate.now();
     }
 }

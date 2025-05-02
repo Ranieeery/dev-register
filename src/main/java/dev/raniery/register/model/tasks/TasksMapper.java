@@ -15,7 +15,7 @@ public class TasksMapper {
         tasks.setDueDate(tasksDTO.getDueDate());
         tasks.setDeveloper(tasksDTO.getDeveloper());
         tasks.setStatus(tasksDTO.getStatus());
-        tasks.setCreationDate(tasksDTO.getCreationDate());
+        tasks.setCreatedAt(tasksDTO.getCreatedAt());
         tasks.setFinishDate(tasksDTO.getFinishDate());
 
         return tasks;
@@ -31,7 +31,7 @@ public class TasksMapper {
         tasksDTO.setDueDate(tasks.getDueDate());
         tasksDTO.setDeveloper(tasks.getDeveloper());
         tasksDTO.setStatus(tasks.getStatus());
-        tasksDTO.setCreationDate(tasks.getCreationDate());
+        tasksDTO.setCreatedAt(tasks.getCreatedAt());
         tasksDTO.setFinishDate(tasks.getFinishDate());
 
         return tasksDTO;
