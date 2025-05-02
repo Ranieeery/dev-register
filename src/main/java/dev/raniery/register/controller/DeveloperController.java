@@ -6,6 +6,7 @@ import dev.raniery.register.model.developer.DeveloperRegisterDTO;
 import dev.raniery.register.model.developer.DeveloperUpdateDTO;
 import dev.raniery.register.service.DeveloperService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.transaction.Transactional;
@@ -79,16 +80,20 @@ public class DeveloperController {
     @PatchMapping("/update/{id}")
     @Operation(summary = "Update a developer", description = "Updates a specific developer by its ID")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Developer updated successfully"),
-        @ApiResponse(responseCode = "404", description = "Developer not found or deleted")
+            @ApiResponse(responseCode = "200", description = "Developer updated successfully"),
+            @ApiResponse(responseCode = "404", description = "Developer not found or deleted")
     })
-    public ResponseEntity<Object> updateDeveloper(@PathVariable UUID id, @RequestBody DeveloperUpdateDTO developer) {
+    public ResponseEntity<?> updateDeveloper(
+            @Parameter(description = "Developer ID to be updated")
+            @PathVariable UUID id,
+            @Parameter(description = "Developer data to be updated in request body") 
+            @RequestBody @Valid DeveloperUpdateDTO updateDTO) {
 
         if (developerService.findById(id) == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id + " not found or not deleted.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id + " not found or deleted. :(");
         }
 
-        return ResponseEntity.ok(developerService.updateDeveloper(id, developer));
+        return ResponseEntity.ok(developerService.updateDeveloper(id, updateDTO));
     }
 
     @Transactional
@@ -98,10 +103,12 @@ public class DeveloperController {
         @ApiResponse(responseCode = "200", description = "Developer deleted successfully"),
         @ApiResponse(responseCode = "404", description = "Developer not found or already deleted")
     })
-    public ResponseEntity<Object> deleteDeveloper(@PathVariable UUID id) {
+    public ResponseEntity<?> deleteDeveloper(
+            @Parameter(description = "Developer ID to be deleted")
+            @PathVariable UUID id) {
 
         if (developerService.findById(id) == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id + " Not found or deleted. :(");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id + " not found or deleted. :(");
         }
 
         developerService.toggleActiveDeveloper(id);
@@ -116,7 +123,9 @@ public class DeveloperController {
         @ApiResponse(responseCode = "200", description = "Developer restored successfully"),
         @ApiResponse(responseCode = "404", description = "Developer not found or not deleted")
     })
-    public ResponseEntity<Object> undeleteDeveloper(@PathVariable UUID id) {
+    public ResponseEntity<?> undeleteDeveloper(
+            @Parameter(description = "Developer ID to be restored")
+            @PathVariable UUID id) {
 
         if (developerService.findDeletedById(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id + " not found or not deleted.");

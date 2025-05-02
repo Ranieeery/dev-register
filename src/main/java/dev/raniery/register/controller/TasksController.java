@@ -6,6 +6,7 @@ import dev.raniery.register.model.tasks.TasksRegisterDTO;
 import dev.raniery.register.model.tasks.TasksUpdateDTO;
 import dev.raniery.register.service.TasksService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.transaction.Transactional;
@@ -81,10 +82,14 @@ public class TasksController {
         @ApiResponse(responseCode = "200", description = "Task updated successfully"),
         @ApiResponse(responseCode = "404", description = "Task not found or deleted")
     })
-    public ResponseEntity<Object> updateTask(@PathVariable Long id, @RequestBody TasksUpdateDTO updateDTO) {
+    public ResponseEntity<?> updateTask(
+            @Parameter(description = "Task ID to be updated")
+            @PathVariable Long id, 
+            @Parameter(description = "Task data to be updated in request body")
+            @RequestBody TasksUpdateDTO updateDTO) {
 
         if (tasksService.findById(id) == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task " + id.toString() + " not found or deleted.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task " + id + " not found or deleted. :(");
         }
 
         return ResponseEntity.ok(tasksService.updateTask(id, updateDTO));
@@ -97,14 +102,16 @@ public class TasksController {
         @ApiResponse(responseCode = "200", description = "Task deleted successfully"),
         @ApiResponse(responseCode = "404", description = "Task not found or already deleted")
     })
-    public ResponseEntity<Object> deleteTask(@PathVariable Long id) {
+    public ResponseEntity<?> deleteTask(
+            @Parameter(description = "Task ID to be deleted")
+            @PathVariable Long id) {
         if (tasksService.findById(id) == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task " + id.toString() + " Not found or deleted. :(");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task " + id + " not found or deleted. :(");
         }
 
         tasksService.toggleActiveTask(id);
 
-        return ResponseEntity.ok("Task " + id.toString() + " deleted with success!");
+        return ResponseEntity.ok("Task " + id + " deleted with success!");
     }
 
     @Transactional
@@ -114,14 +121,16 @@ public class TasksController {
         @ApiResponse(responseCode = "200", description = "Task restored successfully"),
         @ApiResponse(responseCode = "404", description = "Task not found or not deleted")
     })
-    public ResponseEntity<Object> undeleteTask(@PathVariable Long id) {
+    public ResponseEntity<?> undeleteTask(
+            @Parameter(description = "Task ID to be restored")
+            @PathVariable Long id) {
 
         if (tasksService.findDeletedById(id) == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task " + id.toString() + " not found or not deleted.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task " + id + " not found or not deleted.");
         }
 
         tasksService.toggleActiveTask(id);
 
-        return ResponseEntity.ok("Task " + id.toString() + " restored with success!");
+        return ResponseEntity.ok("Task " + id + " restored with success!");
     }
 }
