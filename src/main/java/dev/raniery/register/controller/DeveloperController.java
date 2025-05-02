@@ -52,7 +52,7 @@ public class DeveloperController {
     public ResponseEntity<Object> listDeveloperById(@PathVariable UUID id) {
 
         if (developerService.findById(id) == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id.toString() + " not found or not deleted.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id.toString() + " not found or deleted.");
         }
 
         return ResponseEntity.ok(developerService.findById(id));
