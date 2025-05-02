@@ -25,16 +25,17 @@ public class TasksDTO {
 
     @JsonIgnore
     private Developer developer;
-    
+    private Status status;
+    private LocalDate createdAt;
+    private LocalDate finishDate;
+    private Boolean completed;
+    private Priority priority;
+
     @JsonProperty("developer")
     public DeveloperId getDeveloperId() {
         return new DeveloperId(developer != null ? developer.getId() : null);
     }
-    
-    private Status status;
-    private LocalDate createdAt;
-    private LocalDate finishDate;
-    
+
     @Data
     @NoArgsConstructor
     @AllArgsConstructor

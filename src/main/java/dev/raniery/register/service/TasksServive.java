@@ -16,15 +16,13 @@ public class TasksServive {
     private final TasksMapper tasksMapper;
     private final TasksRegisterMapper tasksRegisterMapper;
     private final DeveloperRepository developerRepository;
-    private final TaskUpdateMapper taskUpdateMapper;
 
 
-    public TasksServive(TasksRepository tasksRepository, TasksMapper tasksMapper, TasksRegisterMapper tasksRegisterMapper, DeveloperRepository developerRepository, TaskUpdateMapper taskUpdateMapper) {
+    public TasksServive(TasksRepository tasksRepository, TasksMapper tasksMapper, TasksRegisterMapper tasksRegisterMapper, DeveloperRepository developerRepository) {
         this.tasksRepository = tasksRepository;
         this.tasksMapper = tasksMapper;
         this.tasksRegisterMapper = tasksRegisterMapper;
         this.developerRepository = developerRepository;
-        this.taskUpdateMapper = taskUpdateMapper;
     }
 
     public Tasks createTask(TasksRegisterDTO tasksRegisterDTO) {
@@ -45,16 +43,16 @@ public class TasksServive {
         return task.orElse(null);
     }
 
-    public Tasks updateTask(Long id, TasksUpdateDTO tasksUpdateDTO) {
+    public TasksDTO updateTask(Long id, TasksUpdateDTO tasksUpdateDTO) {
         Optional<Tasks> optionalTask = tasksRepository.findById(id);
 
         if (optionalTask.isPresent()) {
-            Tasks task = optionalTask.get();
-            task.updateTask(tasksUpdateDTO, developerRepository);
+            Tasks existingTask = optionalTask.get();
+            existingTask.updateTask(tasksUpdateDTO, developerRepository);
 
-            tasksRepository.save(task);
-
-            return taskUpdateMapper.map(tasksUpdateDTO);
+            Tasks updatedTask = tasksRepository.save(existingTask);
+            
+            return tasksMapper.mapToDto(updatedTask);
         }
 
         return null;

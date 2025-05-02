@@ -17,6 +17,8 @@ public class TasksMapper {
         tasks.setStatus(tasksDTO.getStatus());
         tasks.setCreatedAt(tasksDTO.getCreatedAt());
         tasks.setFinishDate(tasksDTO.getFinishDate());
+        tasks.setCompleted(tasksDTO.getCompleted());
+        tasks.setPriority(tasksDTO.getPriority());
 
         return tasks;
     }
@@ -34,6 +36,8 @@ public class TasksMapper {
         tasksDTO.setStatus(tasks.getStatus());
         tasksDTO.setCreatedAt(tasks.getCreatedAt());
         tasksDTO.setFinishDate(tasks.getFinishDate());
+        tasksDTO.setCompleted(tasks.getCompleted());
+        tasksDTO.setPriority(tasks.getPriority());
 
         return tasksDTO;
     }

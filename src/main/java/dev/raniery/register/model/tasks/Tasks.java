@@ -60,7 +60,7 @@ public class Tasks {
         this.completed = false;
     }
 
-    public void setCompleted(Status status) {
+    public void setCompletedStatus(Status status) {
         this.completed = status.equals(Status.COMPLETED);
     }
 
@@ -80,13 +80,13 @@ public class Tasks {
         if (updateDTO.hasDueDate()) {
             this.dueDate = updateDTO.getDueDate();
         }
-        if (updateDTO.hasDeveloper()) {
-            this.developer = developerRepository.findById(updateDTO.getDeveloper().getId()).orElse(this.developer);
+        if (updateDTO.hasDeveloperId()) {
+            this.developer = developerRepository.findById(updateDTO.getDeveloperId().getId()).orElse(this.developer);
         }
         if (updateDTO.hasStatus()) {
             Status newStatus = updateDTO.getStatus();
             this.status = newStatus;
-            this.setCompleted(newStatus);
+            this.setCompletedStatus(newStatus);
         }
         if (updateDTO.hasFinishDate()) {
             this.finishDate = updateDTO.getFinishDate();

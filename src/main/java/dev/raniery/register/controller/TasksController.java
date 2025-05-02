@@ -58,7 +58,6 @@ public class TasksController {
         return ResponseEntity.ok().body(tasksServive.findById(id));
     }
 
-    //TODO: ResponseEntity return
     @Transactional
     @PatchMapping("/update/{id}")
     public ResponseEntity<Object> updateTask(@PathVariable Long id, @RequestBody TasksUpdateDTO updateDTO) {
@@ -67,9 +66,7 @@ public class TasksController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task " + id.toString() + " not found or deleted.");
         }
 
-        Tasks task = tasksServive.updateTask(id, updateDTO);
-
-        return ResponseEntity.ok(task);
+        return ResponseEntity.ok(tasksServive.updateTask(id, updateDTO));
     }
 
     //TODO: ResponseEntity return
