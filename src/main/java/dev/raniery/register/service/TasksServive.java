@@ -20,17 +20,15 @@ public class TasksServive {
         this.tasksRegisterMapper = tasksRegisterMapper;
     }
 
-    public TasksRegisterDTO createTask(TasksRegisterDTO tasksRegisterDTO) {
+    public Tasks createTask(TasksRegisterDTO tasksRegisterDTO) {
         Tasks task = tasksRegisterMapper.map(tasksRegisterDTO);
-        task = tasksRepository.save(task);
 
-        return tasksRegisterMapper.map(task);
-
+        return tasksRepository.save(task);
     }
 
     public Page<TasksDTO> findAll(Pageable pageable) {
         Page<Tasks> tasksPage = tasksRepository.findAllByCompletedTrue(pageable);
 
-        return tasksPage.map(tasksMapper::map);
+        return tasksPage.map(tasksMapper::mapToDto);
     }
 }

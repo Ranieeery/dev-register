@@ -12,7 +12,11 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/tasks")
@@ -29,10 +33,12 @@ public class TasksController {
     //TODO: Fazer TODA a lógica para a as tasks com class DTO e Mapper
     @PostMapping("/create")
     @Transactional
-    public Tasks createTask(@RequestBody @Valid TasksRegisterDTO registerDTO) {
-        TasksRegisterDTO taskDto = tasksServive.createTask(registerDTO);
+    public ResponseEntity<Tasks> createTask(@RequestBody @Valid TasksRegisterDTO registerDTO, UriComponentsBuilder uriBuilder) {
+        Tasks task = tasksServive.createTask(registerDTO);
 
-        return new Tasks(taskDto);
+        URI uri = uriBuilder.path("/list/{id}").buildAndExpand(task.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(task);
     }
 
     @PutMapping

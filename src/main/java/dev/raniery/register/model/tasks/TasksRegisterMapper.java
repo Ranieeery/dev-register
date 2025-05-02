@@ -6,19 +6,10 @@ import org.springframework.stereotype.Component;
 public class TasksRegisterMapper {
 
     public Tasks map(TasksRegisterDTO registerDTO) {
-        Tasks tasks = new Tasks();
-
-        tasks.setName(registerDTO.getName());
-        tasks.setDescription(registerDTO.getDescription());
-        tasks.setLanguage(registerDTO.getLanguage());
-        tasks.setStartDate(registerDTO.getStartDate());
-        tasks.setDueDate(registerDTO.getDueDate());
-        tasks.setDescription(registerDTO.getDescription());
-
-        return tasks;
+        return new Tasks(registerDTO);
     }
 
-    public TasksRegisterDTO map(Tasks tasks) {
+    public TasksRegisterDTO mapToDto(Tasks tasks) {
         TasksRegisterDTO registerDTO = new TasksRegisterDTO();
 
         registerDTO.setName(tasks.getName());

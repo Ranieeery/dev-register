@@ -21,7 +21,7 @@ public class TasksMapper {
         return tasks;
     }
 
-    public TasksDTO map(Tasks tasks) {
+    public TasksDTO mapToDto(Tasks tasks) {
         TasksDTO tasksDTO = new TasksDTO();
 
         tasksDTO.setName(tasks.getName());

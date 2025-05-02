@@ -27,7 +27,7 @@ public class TasksRegisterDTO {
 
     private LocalDateTime startDate;
 
-    @NotBlank
+    @NotNull
     private LocalDate dueDate;
 
     @NotNull
