@@ -23,15 +23,18 @@ public class Developer {
     private UUID id;
     private String name;
 
-    //TODO: Adicionar Enums no banco para impedir dependência
+    @Column(name = "languages")
+    @Convert(converter = LanguagesConverter.class)
     private EnumSet<Languages> languages;
 
     private int yearsExperience;
 
-    //TODO: Adicionar Enums no banco para impedir dependência
+    @Enumerated(EnumType.STRING)
     private Specialization specialization;
 
+    @Enumerated(EnumType.STRING)
     private Seniority seniority;
+
     private String linkedin;
     private String github;
 
@@ -55,27 +58,27 @@ public class Developer {
         this.active = !active;
     }
 
-    public void updateDeveloper(@Valid DeveloperUpdateDTO dto) {
-        if (dto.name().isPresent()) {
-            this.name = dto.name().get();
+    public void updateDeveloper(@Valid DeveloperUpdateDTO updateDTO) {
+        if (updateDTO.name().isPresent()) {
+            this.name = updateDTO.name().get();
         }
-        if (dto.languages().isPresent()) {
-            this.languages = dto.languages().get();
+        if (updateDTO.languages().isPresent()) {
+            this.languages = updateDTO.languages().get();
         }
-        if (dto.yearsExperience().isPresent()) {
-            this.yearsExperience = dto.yearsExperience().get();
+        if (updateDTO.yearsExperience().isPresent()) {
+            this.yearsExperience = updateDTO.yearsExperience().get();
         }
-        if (dto.specialization().isPresent()) {
-            this.specialization = dto.specialization().get();
+        if (updateDTO.specialization().isPresent()) {
+            this.specialization = updateDTO.specialization().get();
         }
-        if (dto.seniority().isPresent()) {
-            this.seniority = dto.seniority().get();
+        if (updateDTO.seniority().isPresent()) {
+            this.seniority = updateDTO.seniority().get();
         }
-        if (dto.linkedin().isPresent()) {
-            this.linkedin = dto.linkedin().get();
+        if (updateDTO.linkedin().isPresent()) {
+            this.linkedin = updateDTO.linkedin().get();
         }
-        if (dto.github().isPresent()) {
-            this.github = dto.github().get();
+        if (updateDTO.github().isPresent()) {
+            this.github = updateDTO.github().get();
         }
     }
 }

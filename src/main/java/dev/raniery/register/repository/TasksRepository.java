@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 public interface TasksRepository extends JpaRepository<Tasks, Long> {
 
     @Query("""
-        SELECT tbt FROM Tasks tbt
-        WHERE tbt.completed = false
+        SELECT t FROM Tasks t
+        WHERE t.completed = false
     """)
     Page<Tasks> findAllByCompletedTrue(Pageable pageable);
 }

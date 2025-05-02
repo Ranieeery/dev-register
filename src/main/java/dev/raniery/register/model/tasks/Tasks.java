@@ -23,6 +23,8 @@ public class Tasks {
     private Long id;
     private String name;
     private String description;
+
+    @Enumerated(EnumType.STRING)
     private Languages language;
 
     private LocalDateTime startDate;
