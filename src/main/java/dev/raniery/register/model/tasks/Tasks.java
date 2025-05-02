@@ -16,8 +16,6 @@ import java.time.LocalDateTime;
 @Table(name = "tb_tasks")
 public class Tasks {
 
-    //TODO: Add Status (on hold, completed, etc)
-    //TODO: Add creation date
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,11 +32,20 @@ public class Tasks {
     @JsonIgnore
     private Developer developer;
 
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    private LocalDate creationDate;
+
+    private LocalDate finishDate;
+
     public Tasks(TasksRegisterDTO registerDTO) {
         this.name = registerDTO.getName();
         this.description = registerDTO.getDescription();
         this.language = registerDTO.getLanguages();
         this.dueDate = registerDTO.getDueDate();
         this.developer = registerDTO.getDeveloper();
+        this.status = Status.TO_DO;
+        this.creationDate = LocalDate.now();
     }
 }

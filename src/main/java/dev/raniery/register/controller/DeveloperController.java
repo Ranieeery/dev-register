@@ -28,8 +28,6 @@ public class DeveloperController {
         this.developerService = developerService;
     }
 
-    //TODO: Classes records para tratar requisições
-    //TODO: Records para NotNull
     //TODO: ResponseEntity com retornos personalizados
     @PostMapping("/create")
     @Transactional
