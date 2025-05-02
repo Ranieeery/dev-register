@@ -57,7 +57,7 @@ public class TasksService {
             existingTask.updateTask(tasksUpdateDTO, developerRepository);
 
             Tasks updatedTask = tasksRepository.save(existingTask);
-            
+
             return tasksMapper.mapToDto(updatedTask);
         }
 
