@@ -48,6 +48,8 @@ public class Tasks {
     @Enumerated(EnumType.STRING)
     private Priority priority;
 
+    private Boolean active;
+
     public Tasks(TasksRegisterDTO registerDTO) {
         this.name = registerDTO.getName();
         this.description = registerDTO.getDescription();
@@ -58,10 +60,15 @@ public class Tasks {
         this.createdAt = LocalDate.now();
         this.priority = registerDTO.getPriority();
         this.completed = false;
+        this.active = true;
     }
 
     public void setCompletedStatus(Status status) {
         this.completed = status.equals(Status.COMPLETED);
+    }
+
+    public void setActive() {
+        this.active = !active;
     }
 
     public void updateTask(@Valid TasksUpdateDTO updateDTO, DeveloperRepository developerRepository) {

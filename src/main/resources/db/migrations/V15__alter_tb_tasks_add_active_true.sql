@@ -1,0 +1,1 @@
+UPDATE tb_tasks SET active = true;

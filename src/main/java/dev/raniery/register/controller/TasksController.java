@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.UUID;
 
 //TODO: Fazer TODA a lógica para a as tasks com class DTO e Mapper
 @RestController
@@ -69,9 +70,28 @@ public class TasksController {
         return ResponseEntity.ok(tasksServive.updateTask(id, updateDTO));
     }
 
-    //TODO: ResponseEntity return
-    @DeleteMapping("/{id}")
-    public String deleteTaskById(@PathVariable Long id) {
-        return id.toString();
+    @Transactional
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<Object> deleteTask(@PathVariable Long id) {
+        if (tasksServive.findById(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task " + id.toString() + " Not found or deleted. :(");
+        }
+
+        tasksServive.deleteTask(id);
+
+        return ResponseEntity.ok("Task " + id.toString() + " deleted with success!");
+    }
+
+    @Transactional
+    @PatchMapping("/delete/{id}/undo")
+    public ResponseEntity<Object> undeleteTask(@PathVariable Long id) {
+
+        if (tasksServive.findDeletedById(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task " + id.toString() + " not found or not deleted.");
+        }
+
+        tasksServive.deleteTask(id);
+
+        return ResponseEntity.ok("Task " + id.toString() + " restored with success!");
     }
 }

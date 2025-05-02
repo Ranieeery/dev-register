@@ -1,5 +1,6 @@
 package dev.raniery.register.service;
 
+import dev.raniery.register.model.developer.DeveloperListDTO;
 import dev.raniery.register.model.tasks.*;
 import dev.raniery.register.repository.DeveloperRepository;
 import dev.raniery.register.repository.TasksRepository;
@@ -38,9 +39,15 @@ public class TasksServive {
     }
 
     public TasksDTO findById(Long id) {
-        Optional<TasksDTO> task = tasksRepository.findById(id).map(tasksMapper::mapToDto);
+        Optional<TasksDTO> task = tasksRepository.findByIdAndActiveTrue(id).map(tasksMapper::mapToDto);
 
         return task.orElse(null);
+    }
+
+    public TasksDTO findDeletedById(Long id) {
+        Optional<TasksDTO> developer = tasksRepository.findByIdAndActiveFalse(id).map(tasksMapper::mapToDto);
+
+        return developer.orElse(null);
     }
 
     public TasksDTO updateTask(Long id, TasksUpdateDTO tasksUpdateDTO) {
@@ -56,5 +63,12 @@ public class TasksServive {
         }
 
         return null;
+    }
+
+    public void deleteTask(Long id) {
+        Tasks task = tasksRepository.getReferenceById(id);
+
+        task.setActive();
+        tasksRepository.save(task);
     }
 }
