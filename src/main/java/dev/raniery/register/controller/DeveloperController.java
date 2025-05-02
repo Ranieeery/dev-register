@@ -5,17 +5,20 @@ import dev.raniery.register.model.developer.DeveloperListDTO;
 import dev.raniery.register.model.developer.DeveloperRegisterDTO;
 import dev.raniery.register.model.developer.DeveloperUpdateDTO;
 import dev.raniery.register.service.DeveloperService;
-import jakarta.validation.Valid;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.UUID;
 
 @RestController
@@ -28,36 +31,67 @@ public class DeveloperController {
         this.developerService = developerService;
     }
 
-    //TODO: ResponseEntity com retornos personalizados
-    @PostMapping("/create")
     @Transactional
-    public Developer createDeveloper(@RequestBody @Valid DeveloperRegisterDTO developer) {
-        return developerService.createDeveloper(developer);
+    @PostMapping("/create")
+    public ResponseEntity<DeveloperListDTO> createDeveloper(@RequestBody @Valid DeveloperRegisterDTO developerDto, UriComponentsBuilder uriBuilder) {
+        Developer developer = developerService.createDeveloper(developerDto);
+
+        URI uri = uriBuilder.path("/list/{id}").buildAndExpand(developer.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(new DeveloperListDTO(developer));
     }
 
     @GetMapping("/list")
-    public PagedModel<EntityModel<DeveloperListDTO>> listDeveloper(@PageableDefault(sort = {"name"}) Pageable pageable, PagedResourcesAssembler<DeveloperListDTO> assembler) {
+    public ResponseEntity<PagedModel<EntityModel<DeveloperListDTO>>> listDeveloper(@PageableDefault(sort = {"name"}) Pageable pageable, PagedResourcesAssembler<DeveloperListDTO> assembler) {
         Page<DeveloperListDTO> developerListDTOS = developerService.findAll(pageable);
 
-        return assembler.toModel(developerListDTOS);
+        return ResponseEntity.ok(assembler.toModel(developerListDTOS));
     }
 
     @GetMapping("/list/{id}")
-    public DeveloperListDTO listDeveloperById(@PathVariable UUID id) {
-        return developerService.findById(id);
+    public ResponseEntity<Object> listDeveloperById(@PathVariable UUID id) {
+
+        if (developerService.findById(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id.toString() + " not found or not deleted.");
+        }
+
+        return ResponseEntity.ok(developerService.findById(id));
     }
 
+    @Transactional
     @PutMapping("/update/{id}")
-    @Transactional
-    public DeveloperUpdateDTO updateDeveloper(@PathVariable UUID id, @RequestBody DeveloperUpdateDTO developer) {
-        return developerService.updateDeveloper(id, developer);
+    public ResponseEntity<Object> updateDeveloper(@PathVariable UUID id, @RequestBody DeveloperUpdateDTO developer) {
+
+        if (developerService.findById(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id.toString() + " not found or not deleted.");
+        }
+
+        return ResponseEntity.ok(developerService.updateDeveloper(id, developer));
     }
 
-    @DeleteMapping("/delete/{id}")
     @Transactional
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Object> deleteDeveloper(@PathVariable UUID id) {
+
+        if (developerService.findById(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id.toString() + " Not found or deleted. :(");
+        }
+
         developerService.deleteDeveloper(id);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Developer " + id.toString() + " deleted with success!");
+    }
+
+    @Transactional
+    @DeleteMapping("/delete/{id}/undo")
+    public ResponseEntity<Object> undeleteDeveloper(@PathVariable UUID id) {
+
+        if (developerService.findDeletedById(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id.toString() + " not found or not deleted.");
+        }
+
+        developerService.deleteDeveloper(id);
+
+        return ResponseEntity.ok("Developer " + id.toString() + " restored with success!");
     }
 }

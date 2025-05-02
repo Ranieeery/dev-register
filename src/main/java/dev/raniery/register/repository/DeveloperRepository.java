@@ -12,4 +12,6 @@ public interface DeveloperRepository extends JpaRepository<Developer, UUID> {
     Page<Developer> findAllByActiveTrue(Pageable pageable);
 
     Optional<Developer> findByIdAndActiveTrue(UUID id);
+
+    Optional<Developer> findByIdAndActiveFalse(UUID id);
 }
