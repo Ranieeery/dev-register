@@ -5,6 +5,9 @@ import dev.raniery.register.model.tasks.TasksDTO;
 import dev.raniery.register.model.tasks.TasksRegisterDTO;
 import dev.raniery.register.model.tasks.TasksUpdateDTO;
 import dev.raniery.register.service.TasksService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -20,7 +23,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
-//TODO: Fazer TODA a lógica para a as tasks com class DTO e Mapper
 @RestController
 @RequestMapping("/tasks")
 public class TasksController {
@@ -33,6 +35,11 @@ public class TasksController {
 
     @Transactional
     @PostMapping("/create")
+    @Operation(summary = "Create a new task", description = "Route creates a new task and stores it in the database")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Task created successfully"),
+        @ApiResponse(responseCode = "400", description = "Bad request - validation error")
+    })
     public ResponseEntity<Tasks> createTask(@RequestBody @Valid TasksRegisterDTO registerDTO, UriComponentsBuilder uriBuilder) {
         Tasks task = tasksService.createTask(registerDTO);
 
@@ -42,6 +49,10 @@ public class TasksController {
     }
 
     @GetMapping("/list")
+    @Operation(summary = "List all tasks", description = "Returns a paginated list of all tasks")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Tasks listed successfully")
+    })
     public ResponseEntity<PagedModel<EntityModel<TasksDTO>>> listTasks(@PageableDefault(sort = {"id"}) Pageable pageable, PagedResourcesAssembler<TasksDTO> assembler) {
         Page<TasksDTO> tasksDTOS = tasksService.findAll(pageable);
 
@@ -49,6 +60,11 @@ public class TasksController {
     }
 
     @GetMapping("/list/{id}")
+    @Operation(summary = "Get a task by ID", description = "Returns details of a specific task by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Task found successfully"),
+        @ApiResponse(responseCode = "404", description = "Task not found or deleted")
+    })
     public ResponseEntity<Object> listTasksById(@PathVariable Long id) {
 
         if (tasksService.findById(id) == null) {
@@ -60,6 +76,11 @@ public class TasksController {
 
     @Transactional
     @PatchMapping("/update/{id}")
+    @Operation(summary = "Update a task", description = "Updates a specific task by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Task updated successfully"),
+        @ApiResponse(responseCode = "404", description = "Task not found or deleted")
+    })
     public ResponseEntity<Object> updateTask(@PathVariable Long id, @RequestBody TasksUpdateDTO updateDTO) {
 
         if (tasksService.findById(id) == null) {
@@ -71,6 +92,11 @@ public class TasksController {
 
     @Transactional
     @DeleteMapping("delete/{id}")
+    @Operation(summary = "Delete a task", description = "Marks a task as deleted by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Task deleted successfully"),
+        @ApiResponse(responseCode = "404", description = "Task not found or already deleted")
+    })
     public ResponseEntity<Object> deleteTask(@PathVariable Long id) {
         if (tasksService.findById(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task " + id.toString() + " Not found or deleted. :(");
@@ -83,6 +109,11 @@ public class TasksController {
 
     @Transactional
     @PatchMapping("/delete/{id}/undo")
+    @Operation(summary = "Restore a deleted task", description = "Restores a previously deleted task by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Task restored successfully"),
+        @ApiResponse(responseCode = "404", description = "Task not found or not deleted")
+    })
     public ResponseEntity<Object> undeleteTask(@PathVariable Long id) {
 
         if (tasksService.findDeletedById(id) == null) {

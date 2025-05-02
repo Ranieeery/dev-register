@@ -5,6 +5,9 @@ import dev.raniery.register.model.developer.DeveloperListDTO;
 import dev.raniery.register.model.developer.DeveloperRegisterDTO;
 import dev.raniery.register.model.developer.DeveloperUpdateDTO;
 import dev.raniery.register.service.DeveloperService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -33,6 +36,11 @@ public class DeveloperController {
 
     @Transactional
     @PostMapping("/create")
+    @Operation(summary = "Create a new developer", description = "Route creates a new developer and stores it in the database")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Developer created successfully"),
+        @ApiResponse(responseCode = "400", description = "Bad request - validation error")
+    })
     public ResponseEntity<DeveloperListDTO> createDeveloper(@RequestBody @Valid DeveloperRegisterDTO developerDto, UriComponentsBuilder uriBuilder) {
         Developer developer = developerService.createDeveloper(developerDto);
 
@@ -42,6 +50,10 @@ public class DeveloperController {
     }
 
     @GetMapping("/list")
+    @Operation(summary = "List all developers", description = "Returns a paginated list of all developers")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Developers listed successfully")
+    })
     public ResponseEntity<PagedModel<EntityModel<DeveloperListDTO>>> listDeveloper(@PageableDefault(sort = {"name"}) Pageable pageable, PagedResourcesAssembler<DeveloperListDTO> assembler) {
         Page<DeveloperListDTO> developerListDTOS = developerService.findAll(pageable);
 
@@ -49,10 +61,15 @@ public class DeveloperController {
     }
 
     @GetMapping("/list/{id}")
+    @Operation(summary = "Get a developer by ID", description = "Returns details of a specific developer by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Developer found successfully"),
+        @ApiResponse(responseCode = "404", description = "Developer not found or deleted")
+    })
     public ResponseEntity<Object> listDeveloperById(@PathVariable UUID id) {
 
         if (developerService.findById(id) == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id.toString() + " not found or deleted.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id + " not found or deleted.");
         }
 
         return ResponseEntity.ok(developerService.findById(id));
@@ -60,10 +77,15 @@ public class DeveloperController {
 
     @Transactional
     @PatchMapping("/update/{id}")
+    @Operation(summary = "Update a developer", description = "Updates a specific developer by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Developer updated successfully"),
+        @ApiResponse(responseCode = "404", description = "Developer not found or deleted")
+    })
     public ResponseEntity<Object> updateDeveloper(@PathVariable UUID id, @RequestBody DeveloperUpdateDTO developer) {
 
         if (developerService.findById(id) == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id.toString() + " not found or not deleted.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id + " not found or not deleted.");
         }
 
         return ResponseEntity.ok(developerService.updateDeveloper(id, developer));
@@ -71,27 +93,37 @@ public class DeveloperController {
 
     @Transactional
     @DeleteMapping("/delete/{id}")
+    @Operation(summary = "Delete a developer", description = "Marks a developer as deleted by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Developer deleted successfully"),
+        @ApiResponse(responseCode = "404", description = "Developer not found or already deleted")
+    })
     public ResponseEntity<Object> deleteDeveloper(@PathVariable UUID id) {
 
         if (developerService.findById(id) == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id.toString() + " Not found or deleted. :(");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id + " Not found or deleted. :(");
         }
 
         developerService.deleteDeveloper(id);
 
-        return ResponseEntity.ok("Developer " + id.toString() + " deleted with success!");
+        return ResponseEntity.ok("Developer " + id + " deleted with success!");
     }
 
     @Transactional
     @PatchMapping("/delete/{id}/undo")
+    @Operation(summary = "Restore a deleted developer", description = "Restores a previously deleted developer by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Developer restored successfully"),
+        @ApiResponse(responseCode = "404", description = "Developer not found or not deleted")
+    })
     public ResponseEntity<Object> undeleteDeveloper(@PathVariable UUID id) {
 
         if (developerService.findDeletedById(id) == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id.toString() + " not found or not deleted.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id + " not found or not deleted.");
         }
 
         developerService.deleteDeveloper(id);
 
-        return ResponseEntity.ok("Developer " + id.toString() + " restored with success!");
+        return ResponseEntity.ok("Developer " + id + " restored with success!");
     }
 }
