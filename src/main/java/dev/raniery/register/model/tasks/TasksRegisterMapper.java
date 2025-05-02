@@ -10,7 +10,7 @@ public class TasksRegisterMapper {
 
         tasks.setName(registerDTO.getName());
         tasks.setDescription(registerDTO.getDescription());
-        tasks.setLanguage(registerDTO.getLanguages());
+        tasks.setLanguage(registerDTO.getLanguage());
         tasks.setStartDate(registerDTO.getStartDate());
         tasks.setDueDate(registerDTO.getDueDate());
         tasks.setDescription(registerDTO.getDescription());
@@ -23,7 +23,7 @@ public class TasksRegisterMapper {
 
         registerDTO.setName(tasks.getName());
         registerDTO.setDescription(tasks.getDescription());
-        registerDTO.setLanguages(tasks.getLanguage());
+        registerDTO.setLanguage(tasks.getLanguage());
         registerDTO.setStartDate(tasks.getStartDate());
         registerDTO.setDueDate(tasks.getDueDate());
         registerDTO.setDescription(tasks.getDescription());

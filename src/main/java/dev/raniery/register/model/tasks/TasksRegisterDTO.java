@@ -23,7 +23,7 @@ public class TasksRegisterDTO {
     private String description;
 
     @NotNull
-    private Languages languages;
+    private Languages language;
 
     private LocalDateTime startDate;
 
@@ -32,4 +32,7 @@ public class TasksRegisterDTO {
 
     @NotNull
     private Developer developer;
+
+    @NotNull
+    private Priority priority;
 }

@@ -24,6 +24,8 @@ public class TasksController {
         this.tasksServive = tasksServive;
     }
 
+    //TODO: ResponseEntity return
+    //TODO: DTOs personalizados
     //TODO: Fazer TODA a lógica para a as tasks com class DTO e Mapper
     @PostMapping("/create")
     @Transactional
