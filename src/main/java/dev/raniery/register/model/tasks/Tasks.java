@@ -57,7 +57,7 @@ public class Tasks {
         this.status = Status.TO_DO;
         this.createdAt = LocalDate.now();
         this.priority = registerDTO.getPriority();
-        this.completed = false; 
+        this.completed = false;
     }
 
     public void setCompleted(Status status) {

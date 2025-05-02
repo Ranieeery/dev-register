@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TasksUpdateDTO {
+    private Long id;
     private String name;
     private String description;
     private Languages language;
@@ -20,8 +21,11 @@ public class TasksUpdateDTO {
     private LocalDate dueDate;
     private Developer developer;
     private Status status;
+    private LocalDate createdAt;
     private LocalDate finishDate;
+    private Boolean completed;
     private Priority priority;
+
 
     public boolean hasName() {
         return name != null;

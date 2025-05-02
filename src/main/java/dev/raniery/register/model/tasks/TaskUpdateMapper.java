@@ -20,7 +20,7 @@ public class TaskUpdateMapper {
         return tasks;
     }
 
-    public TasksUpdateDTO map(Tasks tasks) {
+    public TasksUpdateDTO mapToDto(Tasks tasks) {
         TasksUpdateDTO tasksUpdateDTO = new TasksUpdateDTO();
 
         tasksUpdateDTO.setName(tasks.getName());

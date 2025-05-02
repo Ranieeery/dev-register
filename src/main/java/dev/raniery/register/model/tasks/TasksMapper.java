@@ -24,6 +24,7 @@ public class TasksMapper {
     public TasksDTO mapToDto(Tasks tasks) {
         TasksDTO tasksDTO = new TasksDTO();
 
+        tasksDTO.setId(tasks.getId());
         tasksDTO.setName(tasks.getName());
         tasksDTO.setDescription(tasks.getDescription());
         tasksDTO.setLanguage(tasks.getLanguage());
