@@ -9,8 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class DeveloperService {
@@ -33,6 +33,12 @@ public class DeveloperService {
 
     public DeveloperListDTO findById(UUID id) {
         Optional<DeveloperListDTO> developer = developerRepository.findByIdAndActiveTrue(id).map(DeveloperListDTO::new);
+
+        return developer.orElse(null);
+    }
+
+    public DeveloperListDTO findDeletedById(UUID id) {
+        Optional<DeveloperListDTO> developer = developerRepository.findByIdAndActiveFalse(id).map(DeveloperListDTO::new);
 
         return developer.orElse(null);
     }

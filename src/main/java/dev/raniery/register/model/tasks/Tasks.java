@@ -1,8 +1,8 @@
 package dev.raniery.register.model.tasks;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dev.raniery.register.model.developer.Languages;
 import dev.raniery.register.model.developer.Developer;
+import dev.raniery.register.model.developer.Languages;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

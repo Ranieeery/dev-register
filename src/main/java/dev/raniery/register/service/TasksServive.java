@@ -1,10 +1,6 @@
 package dev.raniery.register.service;
 
-import dev.raniery.register.model.tasks.Tasks;
-import dev.raniery.register.model.tasks.TasksDTO;
-import dev.raniery.register.model.tasks.TasksMapper;
-import dev.raniery.register.model.tasks.TasksRegisterDTO;
-import dev.raniery.register.model.tasks.TasksRegisterMapper;
+import dev.raniery.register.model.tasks.*;
 import dev.raniery.register.repository.TasksRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

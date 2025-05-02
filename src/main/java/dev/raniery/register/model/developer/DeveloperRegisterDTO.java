@@ -21,7 +21,7 @@ public record DeveloperRegisterDTO(
 
     @NotNull
     Seniority seniority,
-    
+
     String linkedin,
     String github) {
 }

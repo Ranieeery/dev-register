@@ -1,16 +1,14 @@
 package dev.raniery.register.model.developer;
 
-import jakarta.persistence.*;
-
-import java.util.List;
-import java.util.UUID;
-
 import dev.raniery.register.model.tasks.Tasks;
+import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.EnumSet;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
