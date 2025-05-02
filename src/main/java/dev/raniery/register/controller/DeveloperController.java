@@ -59,7 +59,7 @@ public class DeveloperController {
     }
 
     @Transactional
-    @PutMapping("/update/{id}")
+    @PatchMapping("/update/{id}")
     public ResponseEntity<Object> updateDeveloper(@PathVariable UUID id, @RequestBody DeveloperUpdateDTO developer) {
 
         if (developerService.findById(id) == null) {
@@ -83,7 +83,7 @@ public class DeveloperController {
     }
 
     @Transactional
-    @DeleteMapping("/delete/{id}/undo")
+    @PatchMapping("/delete/{id}/undo")
     public ResponseEntity<Object> undeleteDeveloper(@PathVariable UUID id) {
 
         if (developerService.findDeletedById(id) == null) {
