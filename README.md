@@ -2,7 +2,7 @@
 
 ![Java](https://img.shields.io/badge/Java-24-orange)
 ![Spring](https://img.shields.io/badge/Spring_Boot-3.4.5-green)
-![Status](https://img.shields.io/badge/Status-In%20Development-yellow)
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
 
 Developer and task management system built with Spring Boot. This API allows registration, querying, updating, and logical deletion of developers and their respective tasks.
 
@@ -14,14 +14,22 @@ Developer and task management system built with Spring Boot. This API allows reg
 - [Installation and Setup](#-installation-and-setup)
 - [API Usage](#-api-usage)
 - [Database Structure](#%EF%B8%8F-database-structure)
+- [Security Implementation](#-security-implementation)
 - [API Documentation](#-api-documentation)
 - [License](#-license)
 
 ## 🔎 Overview
 
-Dev Register is a backend system for managing developers and their tasks. It allows you to register developers with different specializations, experience levels, and programming languages, and assign tasks with priorities and tracking status.
+Dev Register is a backend system for managing developers and their tasks. It allows you to register developers with different specializations, experience levels, and programming languages, and assign tasks with priorities and tracking status. The API is secured with JWT authentication for protected endpoints.
 
 ## 🚀 Main Features
+
+### Authentication & Security
+
+- User registration and login system
+- JWT (JSON Web Tokens) based authentication
+- Protected endpoints with token validation
+- Role-based access control
 
 ### Developers
 
@@ -44,6 +52,8 @@ Dev Register is a backend system for managing developers and their tasks. It all
 
 - **Java 24**
 - **Spring Boot 3.4.5**
+- **Spring Security**: For authentication and authorization
+- **JWT (JSON Web Tokens)**: For secure token-based authentication
 - **Spring Data JPA**: For data persistence
 - **Spring HATEOAS**: For RESTful API implementation with hypermedia
 - **PostgreSQL**: Main database
@@ -86,6 +96,20 @@ mvn spring-boot:run
 ```
 
 ## 📝 API Usage
+
+### Authentication Endpoints
+
+#### Register a new user
+
+```http
+POST /auth/register
+```
+
+#### Login and get JWT token
+
+```http
+POST /auth/login
+```
 
 ### Developer Endpoints
 
@@ -177,6 +201,22 @@ Migrations include the addition of columns for:
 - Creation, start, and end dates
 - Priorities
 - Specializations and programming languages
+
+## 🔒 Security Implementation
+
+The API uses JWT (JSON Web Token) for authentication:
+
+1. **Registration**: Users register with email and password
+2. **Authentication**: Upon successful login, the system returns a JWT token
+3. **Authorization**: For protected endpoints, the token must be included in the request header
+4. **Token Format**: `Authorization: Bearer {your_jwt_token}`
+5. **Token Lifetime**: Tokens are valid for 4 hours by default
+
+JWT benefits in this implementation:
+- Stateless authentication
+- Cross-domain/CORS support
+- Decoupled from user storage
+- Security information embedded within the token
 
 ## 📚 API Documentation
 
