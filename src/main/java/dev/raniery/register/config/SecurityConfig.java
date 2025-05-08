@@ -24,15 +24,6 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                 .requestMatchers(HttpMethod.GET, "api/api-docs/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/swagger/**").permitAll()
-
-                .requestMatchers(HttpMethod.GET, "/developer/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/developer/**").permitAll()
-                .requestMatchers(HttpMethod.PATCH, "/developer/**").permitAll()
-                .requestMatchers(HttpMethod.DELETE, "/developer/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/tasks/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/tasks/**").permitAll()
-                .requestMatchers(HttpMethod.PATCH, "/tasks/**").permitAll()
-                .requestMatchers(HttpMethod.DELETE, "/tasks/**").permitAll()
                 .anyRequest().authenticated()
             )
             .build();
