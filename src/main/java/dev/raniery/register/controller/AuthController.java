@@ -17,10 +17,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/auth")
-//TODO: Token service
-//TODO: Login
 //TODO: HandleExceptions
-//TODO: Tokens de login
 public class AuthController {
 
     private final TokenService tokenService;
@@ -35,8 +32,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<UserDTO> register(@Valid @RequestBody UserRegisterDTO userDto) {
-        Users user = new Users(userDto);
-        userService.save(user);
+        Users user = userService.save(new Users(userDto));
 
         return ResponseEntity
             .created(URI.create("/developer/list/" + user.getId().toString()))
@@ -53,6 +49,4 @@ public class AuthController {
 
         return ResponseEntity.ok(new UserTokenDTO(tokenService.generateToken(user)));
     }
-
-
 }
