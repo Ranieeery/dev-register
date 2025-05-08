@@ -28,8 +28,13 @@ public class TasksService {
     }
 
     public Tasks createTask(TasksRegisterDTO tasksRegisterDTO) {
-        Tasks task = tasksRegisterMapper.map(tasksRegisterDTO);
 
+        UUID developerId = tasksRegisterDTO.getDeveloper().getId();
+        if (!developerRepository.existsByIdAndActiveTrue(developerId)) {
+            throw DeveloperNotFoundException.forDeveloperId(developerId);
+        }
+
+        Tasks task = tasksRegisterMapper.map(tasksRegisterDTO);
         return tasksRepository.save(task);
     }
 
@@ -56,21 +61,18 @@ public class TasksService {
 
         if (optionalTask.isPresent()) {
             Tasks existingTask = optionalTask.get();
-            UUID developerId = optionalTask.get().getDeveloper().getId();
-
-            if (developerRepository.existsByIdAndActiveTrue(developerId)) {
-                System.out.println(developerId);
-
-                System.out.printf("Developer ID: %s\n", developerId);
-                existingTask.updateTask(tasksUpdateDTO, developerRepository);
-
-                Tasks updatedTask = tasksRepository.save(existingTask);
-
-                return tasksMapper.mapToDto(updatedTask);
-            } else {
+            
+            UUID developerId = tasksUpdateDTO.hasDeveloperId() 
+                ? tasksUpdateDTO.getDeveloperId().getId() 
+                : existingTask.getDeveloper().getId();
+                
+            if (!developerRepository.existsByIdAndActiveTrue(developerId)) {
                 throw DeveloperNotFoundException.forDeveloperId(developerId);
             }
 
+            existingTask.updateTask(tasksUpdateDTO, developerRepository);
+            Tasks updatedTask = tasksRepository.save(existingTask);
+            return tasksMapper.mapToDto(updatedTask);
         }
 
         return null;
