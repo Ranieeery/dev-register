@@ -1,5 +1,6 @@
 package dev.raniery.register.service;
 
+import dev.raniery.register.exceptions.DeveloperNotFoundException;
 import dev.raniery.register.model.tasks.*;
 import dev.raniery.register.repository.DeveloperRepository;
 import dev.raniery.register.repository.TasksRepository;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class TasksService {
@@ -17,8 +19,8 @@ public class TasksService {
     private final TasksRegisterMapper tasksRegisterMapper;
     private final DeveloperRepository developerRepository;
 
-
-    public TasksService(TasksRepository tasksRepository, TasksMapper tasksMapper, TasksRegisterMapper tasksRegisterMapper, DeveloperRepository developerRepository) {
+    public TasksService(TasksRepository tasksRepository, TasksMapper tasksMapper,
+                        TasksRegisterMapper tasksRegisterMapper, DeveloperRepository developerRepository) {
         this.tasksRepository = tasksRepository;
         this.tasksMapper = tasksMapper;
         this.tasksRegisterMapper = tasksRegisterMapper;
@@ -54,11 +56,21 @@ public class TasksService {
 
         if (optionalTask.isPresent()) {
             Tasks existingTask = optionalTask.get();
-            existingTask.updateTask(tasksUpdateDTO, developerRepository);
+            UUID developerId = optionalTask.get().getDeveloper().getId();
 
-            Tasks updatedTask = tasksRepository.save(existingTask);
+            if (developerRepository.existsByIdAndActiveTrue(developerId)) {
+                System.out.println(developerId);
 
-            return tasksMapper.mapToDto(updatedTask);
+                System.out.printf("Developer ID: %s\n", developerId);
+                existingTask.updateTask(tasksUpdateDTO, developerRepository);
+
+                Tasks updatedTask = tasksRepository.save(existingTask);
+
+                return tasksMapper.mapToDto(updatedTask);
+            } else {
+                throw DeveloperNotFoundException.forDeveloperId(developerId);
+            }
+
         }
 
         return null;

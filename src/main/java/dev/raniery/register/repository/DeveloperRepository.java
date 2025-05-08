@@ -14,4 +14,6 @@ public interface DeveloperRepository extends JpaRepository<Developer, UUID> {
     Optional<Developer> findByIdAndActiveTrue(UUID id);
 
     Optional<Developer> findByIdAndActiveFalse(UUID id);
+
+    Boolean existsByIdAndActiveTrue(UUID id);
 }

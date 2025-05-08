@@ -80,14 +80,14 @@ public class DeveloperController {
     @PatchMapping("/update/{id}")
     @Operation(summary = "Update a developer", description = "Updates a specific developer by its ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Developer updated successfully"),
-            @ApiResponse(responseCode = "404", description = "Developer not found or deleted")
+        @ApiResponse(responseCode = "200", description = "Developer updated successfully"),
+        @ApiResponse(responseCode = "404", description = "Developer not found or deleted")
     })
     public ResponseEntity<?> updateDeveloper(
-            @Parameter(description = "Developer ID to be updated")
-            @PathVariable UUID id,
-            @Parameter(description = "Developer data to be updated in request body") 
-            @RequestBody @Valid DeveloperUpdateDTO updateDTO) {
+        @Parameter(description = "Developer ID to be updated")
+        @PathVariable UUID id,
+        @Parameter(description = "Developer data to be updated in request body")
+        @RequestBody @Valid DeveloperUpdateDTO updateDTO) {
 
         if (developerService.findById(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id + " not found or deleted. :(");
@@ -104,8 +104,8 @@ public class DeveloperController {
         @ApiResponse(responseCode = "404", description = "Developer not found or already deleted")
     })
     public ResponseEntity<?> deleteDeveloper(
-            @Parameter(description = "Developer ID to be deleted")
-            @PathVariable UUID id) {
+        @Parameter(description = "Developer ID to be deleted")
+        @PathVariable UUID id) {
 
         if (developerService.findById(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id + " not found or deleted. :(");
@@ -124,8 +124,8 @@ public class DeveloperController {
         @ApiResponse(responseCode = "404", description = "Developer not found or not deleted")
     })
     public ResponseEntity<?> undeleteDeveloper(
-            @Parameter(description = "Developer ID to be restored")
-            @PathVariable UUID id) {
+        @Parameter(description = "Developer ID to be restored")
+        @PathVariable UUID id) {
 
         if (developerService.findDeletedById(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Developer " + id + " not found or not deleted.");

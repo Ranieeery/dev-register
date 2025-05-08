@@ -83,10 +83,10 @@ public class TasksController {
         @ApiResponse(responseCode = "404", description = "Task not found or deleted")
     })
     public ResponseEntity<?> updateTask(
-            @Parameter(description = "Task ID to be updated")
-            @PathVariable Long id, 
-            @Parameter(description = "Task data to be updated in request body")
-            @RequestBody TasksUpdateDTO updateDTO) {
+        @Parameter(description = "Task ID to be updated")
+        @PathVariable Long id,
+        @Parameter(description = "Task data to be updated in request body")
+        @RequestBody TasksUpdateDTO updateDTO) {
 
         if (tasksService.findById(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task " + id + " not found or deleted. :(");
@@ -103,8 +103,8 @@ public class TasksController {
         @ApiResponse(responseCode = "404", description = "Task not found or already deleted")
     })
     public ResponseEntity<?> deleteTask(
-            @Parameter(description = "Task ID to be deleted")
-            @PathVariable Long id) {
+        @Parameter(description = "Task ID to be deleted")
+        @PathVariable Long id) {
         if (tasksService.findById(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task " + id + " not found or deleted. :(");
         }
@@ -122,8 +122,8 @@ public class TasksController {
         @ApiResponse(responseCode = "404", description = "Task not found or not deleted")
     })
     public ResponseEntity<?> undeleteTask(
-            @Parameter(description = "Task ID to be restored")
-            @PathVariable Long id) {
+        @Parameter(description = "Task ID to be restored")
+        @PathVariable Long id) {
 
         if (tasksService.findDeletedById(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task " + id + " not found or not deleted.");

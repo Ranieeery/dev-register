@@ -10,7 +10,7 @@
     </parent>
     <groupId>dev.raniery</groupId>
     <artifactId>register</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>register</name>
     <description>register</description>
     <url/>
@@ -105,13 +105,6 @@
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>9.22.3</version>
-                <configuration>
-                    <url>${database.url}</url>
-                    <user>${database.username}</user>
-                    <password>${database.password}</password>
-                    <locations>classpath:db/migrations</locations>
-                    <baselineOnMigrate>true</baselineOnMigrate>
-                </configuration>
             </plugin>
         </plugins>
     </build>

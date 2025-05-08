@@ -17,7 +17,6 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/auth")
-//TODO: HandleExceptions
 public class AuthController {
 
     private final TokenService tokenService;

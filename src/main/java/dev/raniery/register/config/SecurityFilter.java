@@ -15,11 +15,11 @@ import java.io.IOException;
 import java.util.Optional;
 
 @Component
-public class SecurityFIlter extends OncePerRequestFilter {
+public class SecurityFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
 
-    public SecurityFIlter(TokenService tokenService) {
+    public SecurityFilter(TokenService tokenService) {
         this.tokenService = tokenService;
     }
 
